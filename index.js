@@ -23,3 +23,22 @@ buttons.forEach(button => {
         formActivity.textContent = activity
     })
 })
+
+
+//  Form submission
+form.addEventListener('submit', e => {
+    e.preventDefault()
+    const distance = parseInt(input.value)
+    if (distance) {
+        db.collection('activities').add({
+            distance, // es6 syntax to prevent writing (distance: distance)
+            activity,
+            date: new Date().toString() // this (toString) prevent working around firebase timestamp
+        }).then(() => {
+            error.textContent = ''
+            input.value = ''
+        })
+    } else {
+        error.textContent = 'Please enter a valid distance'
+    }
+})
